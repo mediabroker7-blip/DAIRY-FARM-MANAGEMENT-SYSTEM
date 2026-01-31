@@ -9,9 +9,13 @@ const bodyParser = require('body-parser');
 let routes = require('./routes/pages');
 
 //Connecting to DB
-let mongoUrl = 'mongodb://localhost:27017/';
-let dbName = 'dailyfarm';
-mongoose.connect(mongoUrl + dbName, { useUnifiedTopology: true,  useNewUrlParser: true });
+const dbName = 'dailyfarm';
+
+// Render/production: берём строку подключения из переменной окружения
+// Local: по умолчанию localhost
+const mongoUrl = process.env.MONGO_URL || `mongodb://localhost:27017/${dbName}`;
+
+mongoose.connect(mongoUrl, { useUnifiedTopology: true, useNewUrlParser: true });
 let db = mongoose.connection;
 
 //Test Connection
